@@ -1,0 +1,4 @@
+/docs/_build/*
+/docs/_sources/*
+/docs/_templates/*
+*.pyc

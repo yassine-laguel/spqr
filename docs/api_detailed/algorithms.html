@@ -1,0 +1,375 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Optimization Algorithms &mdash; SPQR  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Risk Optimization" href="risk_optimization.html" />
+    <link rel="prev" title="Oracles API" href="oracles.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> SPQR
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../start.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oracles.html">API Oracles</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#algorithms-for-non-differentiable-losses">Algorithms for non-differentiable losses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#algorithms-for-differentiable-losses">Algorithms for differentiable losses</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="risk_optimization.html">API Optimization Framework</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SPQR</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Optimization Algorithms</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api_detailed/algorithms.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="optimization-algorithms">
+<h1>Optimization Algorithms<a class="headerlink" href="#optimization-algorithms" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="algorithms-for-non-differentiable-losses">
+<h2>Algorithms for non-differentiable losses<a class="headerlink" href="#algorithms-for-non-differentiable-losses" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="spqr.algorithms.SubgradientMethod">
+<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">SubgradientMethod</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/subgradient_method.html#SubgradientMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.SubgradientMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class aimed at running subgradient method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>oracle</strong> – An oracle object among <code class="docutils literal notranslate"><span class="pre">OracleSubgradient</span></code>, <code class="docutils literal notranslate"><span class="pre">OracleSmoothGradient</span></code>,
+<code class="docutils literal notranslate"><span class="pre">IntergratedOracleSubgradient</span></code>, <code class="docutils literal notranslate"><span class="pre">IntegratedOracleSmoothGradient</span></code>.</p></li>
+<li><p><strong>params</strong> – A dictionnary containing the parameters of the algorithm</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="spqr.algorithms.SubgradientMethod.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/subgradient_method.html#SubgradientMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.SubgradientMethod.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the subgradient method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray</em>) – matrix whose lines are realizations of random variable X</p></li>
+<li><p><strong>y</strong> (<em>numpy.array</em>) – vector whose coefficients are realizations of random variable y</p></li>
+<li><p><strong>verboose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
+algorithm as well as time since start.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="spqr.algorithms.DualAveraging">
+<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">DualAveraging</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/dual_averaging.html#DualAveraging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.DualAveraging" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="spqr.algorithms.DualAveraging.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/dual_averaging.html#DualAveraging.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.DualAveraging.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs a bacic version of Dual Averaging Algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray</em>) – matrix whose lines are realizations of random variable X</p></li>
+<li><p><strong>y</strong> (<em>numpy.array</em>) – vector whose coefficients are realizations of random variable y</p></li>
+<li><p><strong>verboose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
+algorithm as well as time since start.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="algorithms-for-differentiable-losses">
+<h2>Algorithms for differentiable losses<a class="headerlink" href="#algorithms-for-differentiable-losses" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="spqr.algorithms.GradientMethod">
+<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">GradientMethod</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/gradient_method.html#GradientMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.GradientMethod" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="spqr.algorithms.GradientMethod.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/gradient_method.html#GradientMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.GradientMethod.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs Gradient Method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray</em>) – matrix whose lines are realizations of random variable X</p></li>
+<li><p><strong>y</strong> (<em>numpy.array</em>) – vector whose coefficients are realizations of random variable y</p></li>
+<li><p><strong>verboose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
+algorithm as well as time since start.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="spqr.algorithms.NesterovMethod">
+<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">NesterovMethod</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/nesterov.html#NesterovMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.NesterovMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class aimed at running Accelerated Gradient Method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>oracle</strong> – An oracle object among <code class="docutils literal notranslate"><span class="pre">OracleSubgradient</span></code>, <code class="docutils literal notranslate"><span class="pre">OracleSmoothGradient</span></code>,
+<code class="docutils literal notranslate"><span class="pre">IntergratedOracleSubgradient</span></code>, <code class="docutils literal notranslate"><span class="pre">IntegratedOracleSmoothGradient</span></code>.</p></li>
+<li><p><strong>params</strong> – A dictionnary containing the parameters of the algorithm</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="spqr.algorithms.NesterovMethod.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/nesterov.html#NesterovMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.NesterovMethod.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs Nesterov Algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray</em>) – matrix whose lines are realizations of random variable X</p></li>
+<li><p><strong>y</strong> (<em>numpy.array</em>) – vector whose coefficients are realizations of random variable y</p></li>
+<li><p><strong>verboose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
+algorithm as well as time since start.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="spqr.algorithms.BFGS">
+<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">BFGS</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/quasi_newton.html#BFGS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.BFGS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class aimed at running Low memory bfgs method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>oracle</strong> – An oracle object among <code class="docutils literal notranslate"><span class="pre">OracleSubgradient</span></code>, <code class="docutils literal notranslate"><span class="pre">OracleSmoothGradient</span></code>,
+<code class="docutils literal notranslate"><span class="pre">IntergratedOracleSubgradient</span></code>, <code class="docutils literal notranslate"><span class="pre">IntegratedOracleSmoothGradient</span></code>.</p></li>
+<li><p><strong>params</strong> – A dictionnary containing the parameters of the algorithm</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="spqr.algorithms.BFGS.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/quasi_newton.html#BFGS.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.BFGS.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs low-memory BFGS algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray</em>) – matrix whose lines are realizations of random variable X</p></li>
+<li><p><strong>y</strong> (<em>numpy.array</em>) – vector whose coefficients are realizations of random variable y</p></li>
+<li><p><strong>verboose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
+algorithm as well as time since start.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="risk_optimization.html" class="btn btn-neutral float-right" title="Risk Optimization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="oracles.html" class="btn btn-neutral float-left" title="Oracles API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Y. LAGUEL, J. MALICK, Z. HARCHAOUI
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

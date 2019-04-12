@@ -1,0 +1,18 @@
+Optimization Algorithms
+=======================
+
+Algorithms for non-differentiable losses
+-----------------------------------------
+.. autoclass:: spqr.algorithms.SubgradientMethod
+    :members:
+.. autoclass:: spqr.algorithms.DualAveraging
+    :members:
+
+Algorithms for differentiable losses
+------------------------------------
+.. autoclass:: spqr.algorithms.GradientMethod
+    :members:
+.. autoclass:: spqr.algorithms.NesterovMethod
+    :members:
+.. autoclass:: spqr.algorithms.BFGS
+    :members:
