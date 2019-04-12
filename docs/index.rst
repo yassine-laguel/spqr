@@ -25,7 +25,7 @@ A first order oracle is built thanks to it. Nature of the oracle depend on the r
 .. image:: img/quantile_superquantile_reg-1.png
    :scale: 50 %
 
-A deeper insight of the toolbox is made possible through a jupyter notebook available at ``GIVE GITHUB ADDRESS HERE``
+A deeper insight of the toolbox is made possible through a jupyter notebook available at ``https://github.com/yassine-laguel/spqr/blob/master/docs/toolbox_demonstration.ipynb``
 
 Table of Contents
 -----------------

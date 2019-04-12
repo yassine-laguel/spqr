@@ -50,4 +50,4 @@ One can run selected descent algorithm (by default ``'subgradient'``) with:
   optimizer.fit(X,y)
   sol = optimizer.solution
 
-A deeper insight of the toolbox is available through ``GIVE GITHUB ADDRESS HERE``
+A deeper insight of the toolbox is available through ``https://github.com/yassine-laguel/spqr/blob/master/docs/toolbox_demonstration.ipynb``
