@@ -6,21 +6,20 @@
 SPQR
 =============
 
-SPQR is a python toolbox for optimization of superquantile-based risk measures. It is aimed at providing a robust solution to problems with models exposed
-to uncertainty. For theoretical matters, see the attached paper "First Order Algorithms for Minimization of superquantile-based Risk Measures".
+SPQR is a python toolbox for optimization of superquantile-based risk measures.For more details, we refer to the companion paper “First Order Algorithms for Minimization of superquantile-based Risk Measures”.
 
 Overview
 --------
 
-For any dataset of features and labels :math:`(X,y)`,this toolbox is aimed at minimizing functions of the form :
+For a couple of features and labels :math:`(X,y)`,this toolbox is aimed at minimizing functions of the form :
 
 .. math::
 
   \phi(w) = \text{CVAR}_{p} \circ L_{X,y}(w),
 
-where :math:`\text{CVAR}` denotes the superquantile, also called conditional value at risk, average value at risk or expected shortfall and loss function :math:`L` is assumed to be provided by the user together with the dataset :math:`(X,y)`.
+where :math:`\text{CVAR}` denotes the superquantile, also called "conditional value at risk", "average value at risk" or "expected shortfall" and loss function :math:`L` is assumed to be provided by the user together with the dataset :math:`(X,y)`.
 
-A first order oracle is built thanks to it. Nature of the oracle depend on the regularity of function :math:`L`, as well as the algorithms proposed to run the optimization. Among these first order algorithms, one can find the Dual Averaging Method, Nesterov Accelerated Method or BFGS. For instance, quantile regression and superquantile regression can be performed with this toolbox :
+We build oracles for the nonsmooth function phi and for a smoothed counterpart :math:`phi_mu`. Various first-order algorithms are proposed to minimise these 2 functions. Among these first order algorithms, one can find the Dual Averaging Method, Nesterov Accelerated Method or BFGS. For instance, quantile regression and superquantile regression can be performed with this toolbox :
 
 .. image:: img/quantile_superquantile_reg-1.png
    :scale: 50 %

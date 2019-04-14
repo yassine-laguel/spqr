@@ -1,19 +1,19 @@
 Getting Started
 ===============
 
-Prerequisites
--------------
-Supyquantile requires several packages one can install through ``conda`` and provided yaml file ``supyquantile_env.yml``::
-
-  $ conda env create --file supyquantile_env.yml
-  $ source activate supyquantile_env
-
-Installation
-------------
+Download
+----------
 Clone the repository available at ::
 
-  $ git clone https://github.com/yassine-laguel/supyquantile.git
+  $ git clone https://github.com/yassine-laguel/spqr.git
   $ cd toolbox/
+
+Installation
+-------------
+SPQR requires several packages one can install through ``conda`` and provided yaml file ``spqr_env.yml``::
+
+  $ conda env create --file spqr_env.yml
+  $ source activate spqr_env
 
 Simple Case Demo
 ----------------
@@ -40,7 +40,7 @@ For that purpose, a RiskOptimizer object with probability level for CVar :math:`
 
 .. code-block:: python
 
-  from supyquantile import RiskOptimizer
+  from spqr import RiskOptimizer
   optimizer = RiskOptimizer(loss, loss_prime, p=0.8)
 
 One can run selected descent algorithm (by default ``'subgradient'``) with:

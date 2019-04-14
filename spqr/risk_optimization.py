@@ -14,7 +14,6 @@ from .algorithms.dual_averaging_advanced import DualAveragingAdvanced
 from .algorithms.quasi_newton import BFGS
 from .algorithms.dual_averaging import DualAveraging
 from .algorithms.nesterov import NesterovMethod
-
 import numpy as np
 
 

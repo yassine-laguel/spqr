@@ -1,1 +1,6 @@
 *.pyc
+docs/_build/
+docs/modules/
+docs/toolbox_demonstration.html
+docs/.DS_Store
+.idea/workspace.xml
