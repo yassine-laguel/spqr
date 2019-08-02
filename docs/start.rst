@@ -23,18 +23,18 @@ is one dimensional array of size :math:`n` representing the targets :
 .. code-block:: python
 
   import numpy as np
-  X = np.random.rand(100,2)
+  X = np.random.rand(10,2)
   w = np.array([1.,2.])
-  y = np.dot(X,w) + np.random.rand(num=50)
+  y = np.dot(X,w) + np.random.rand(10)
 
 We propose to minimize the conditional value at risk of :math:`L_2`-loss :math:`\frac{1}{2}\|Y-Xw\|^2`:
 
 .. code-block:: python
 
   def loss(w,x,y):
-    return (y - np.dot(X,w))^2
+    return (y - np.dot(x,w))**2
   def loss_prime(w,x,y):
-    return -1.0 * np.dot(y -np.dot(x,w)) * x
+    return -2.0 * (y - np.dot(x,w)) * x
 
 For that purpose, a RiskOptimizer object with probability level for CVar :math:`p=0.8` is instantiated:
 
