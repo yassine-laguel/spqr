@@ -6,7 +6,7 @@
 SPQR
 =============
 
-SPQR is a python toolbox for optimization of superquantile-based risk measures.For more details, we refer to the companion paper “First Order Algorithms for Minimization of superquantile-based Risk Measures”.
+SPQR is a toolbox in python for optimization of superquantile-based risk measures.For more details, we refer to the companion paper “First Order Algorithms for Minimization of superquantile-based Risk Measures”.
 
 Overview
 --------
