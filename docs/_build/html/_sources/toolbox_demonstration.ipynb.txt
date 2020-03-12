@@ -1,0 +1,440 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<table>\n",
+    "<tr style=\"background-color:#FFFFFF;\">\n",
+    "<td width=15%>\n",
+    "    <table>\n",
+    "        <tr><img src=\"./img/logo_ljk.jpg\"></br></a>\n",
+    "        </tr>\n",
+    "        <tr><img src=\"./img/logo_uw.png\"></br></a>\n",
+    "        </tr> \n",
+    "    </table>\n",
+    "</td>\n",
+    "<td><center><h1>Supyquantile : A Toolbox for Minimization of Superquantile-Based Risk Measures</h1></center></td>\n",
+    "<td width=15%>\n",
+    "    <table>\n",
+    "        <tr><a href=\"https://yassine-laguel.github.io\" style=\"font-size: 16px; font-weight: bold\">Yassine Laguel </br></a>\n",
+    "        </tr> \n",
+    "        <tr><a href=\"https://ljk.imag.fr/membres/Jerome.Malick/\" style=\"font-size: 16px; font-weight: bold\">Jerôme Malick </br></a>\n",
+    "        </tr>\n",
+    "        <tr><a href=\"http://faculty.washington.edu/zaid/\" style=\"font-size: 16px; font-weight: bold\">Zaid Harchaoui </br></a>\n",
+    "        </tr>    \n",
+    "    </table>\n",
+    "</td>\n",
+    "</tr>\n",
+    "</table>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<br/><br/><div id=\"top\"></div>\n",
+    "\n",
+    "<center><a style=\"font-size: 30pt; font-weight: bold\">The Toolbox</a></center>\n",
+    "\n",
+    "<br/>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<br/><br/><div id=\"part1_1\"></div>\n",
+    "<a style=\"font-size: 20pt; font-weight: bold\">A Generic Problem</a>\n",
+    "<br/>\n",
+    "\n",
+    "Supyquantile is a python toolbox which is aimed at providing optimization first order convex algorithms for the minimization of superquantile based measures. In practice, it proposes to solve problems of the form :\n",
+    "                $$\\min_{w \\in \\mathbb{R}^n}  Cvar(\\hat{L}(w))$$\n",
+    "where $\\hat{L} : w \\mapsto (L(w,x_i,y_i))_{(1 \\leq i \\leq n)}$ takes an input $w \\in \\mathbb{R}^d$ and maps it to a discrete random variable composed of n outcomes.\n",
+    "\n",
+    "Here the couples $(x_i, y_i) \\in \\mathbb{R}^d \\times \\mathbb{R}$ refer to the data provided by the user and associated to the problem. The function $L :\\mathbb{R}^d \\times \\mathbb{R}^d \\times \\mathbb{R} \\rightarrow \\mathbb{R} $, also provided by the user is assumed to satisfy at least :\n",
+    "<ul>\n",
+    "      <li>$L$ is convex with respect to $w$</li>  \n",
+    "      <li>$L$ is subdifferentiable with respect to $w$</li>\n",
+    "</ul>\n",
+    "\n",
+    "\n",
+    "We show below two instances of this problem, <a href=\"#quantile_regression\"> Quantile Regression </a> and <a href=\"#safe_least_squares\"> Distributionally Robust Least Squares </a> and how our toolbox can treat them."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<br/><br/><div id=\"part1_2\"></div>\n",
+    "<a style=\"font-size: 15pt; font-weight: bold\">Functionning</a>\n",
+    "<br/>\n",
+    "\n",
+    "The user can import toolbox's solver with statement : "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os\n",
+    "import sys\n",
+    "\n",
+    "sys.path.insert(0, os.path.abspath('..'))\n",
+    "\n",
+    "from spqr.risk_optimization import RiskOptimizer"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "To create an instance of this solver, all the user needs is to provide a function $L$ as well as well as its subgradient (or gradient). "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "\n",
+    "def L(w,x,y):\n",
+    "    return np.absolute(y-np.dot(x,w))\n",
+    "    \n",
+    "def L_prime(w,x,y):\n",
+    "    return np.sign(y-np.dot(x,w))\n",
+    "\n",
+    "optimizer = RiskOptimizer(L,L_prime)  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Supyquantile inherits from scikit-learn estimator's class. Thus, it provides a <b>fit()</b> and a <b>predict()</b> that work as for usual scikit-learn estimators:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Test Loss : 5204948.38377226\n"
+     ]
+    }
+   ],
+   "source": [
+    "from sklearn.datasets import make_regression\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "\n",
+    "size = 500\n",
+    "dim = 2\n",
+    "# generate regression dataset\n",
+    "X, y = make_regression(n_samples=size, n_features=dim, noise=0.1)\n",
+    "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)\n",
+    "\n",
+    "\n",
+    "optimizer.fit(X_train,y_train)\n",
+    "\n",
+    "y_pred = optimizer.predict(X_test)\n",
+    "print('Test Loss : ' + str(1.0/size *np.linalg.norm(y_pred - y_test)**2))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Iterates of the algorithm and solution after fitting are available through :"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Solution found :[-2695.86172152 -2695.86172152]\n"
+     ]
+    }
+   ],
+   "source": [
+    "list_iterates = optimizer.list_iterates\n",
+    "solution = optimizer.solution\n",
+    "print('Solution found :' + str(solution))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The function $Cvar\\circ L$ or its gradient at a given point $w$, one can use :"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Value found : 7071.868335287736\n",
+      "Gradient found : 0.10447761194029853\n"
+     ]
+    }
+   ],
+   "source": [
+    "w = solution\n",
+    "value = optimizer.oracle.f(w,X_train,y_train)\n",
+    "gradient = optimizer.oracle.g(w,X_train,y_train)\n",
+    "\n",
+    "print('Value found : ' + str(value))\n",
+    "print('Gradient found : ' + str(gradient))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<br/><br/><div id=\"part1_2\"></div>\n",
+    "<a style=\"font-size: 15pt; font-weight: bold\">Custom Parameterization</a>\n",
+    "<br/>\n",
+    "\n",
+    "The class <b>RiskOptimizer</b> can be parametrized in two different ways.\n",
+    "\n",
+    "First option is to directly precise specific parameters wanted at instanciation of the class :"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "optimizer = RiskOptimizer(L,L_prime,p=0.72)  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Customizable parameters are :\n",
+    "<ul>\n",
+    "    <li><b>p</b>: the probability level chosen for Cvar (by default=0.8)</li>\n",
+    "    <li><b>algorithm</b>: the chosen first order method (by default='subgradient')</li>\n",
+    "    <li><b>w_start</b>: the starting point chosen for the iterative method (by default=$0_{\\mathbb{R}^d}$)</li>\n",
+    "    <li><b>alpha</b>: constant involved in the learning rate adopted</li>\n",
+    "    <li><b>nb_iterations</b>: number of iterations wished for the algorithm</li>\n",
+    "</ul>\n",
+    "\n",
+    "Second option is to provide a dictionary containing the specified parameters \n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "params = {\n",
+    "    # General Parameters\n",
+    "    'algorithm': 'catalyst',\n",
+    "    'w_start': None,\n",
+    "    'p': 0.8,\n",
+    "    'alpha': None,\n",
+    "    # Catalyst Parameters\n",
+    "    'catalyst_nb_iterations': 100,\n",
+    "    'catalyst_kappa': 100\n",
+    "    }\n",
+    "\n",
+    "optimizer = RiskOptimizer(L,L_prime,params=params)  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<br/><br/><div id=\"part2\"></div>\n",
+    "<a style=\"font-size: 20pt; font-weight: bold\">Application Example</a>\n",
+    "<br/>\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "<br/><br/><div id=\"part3\"></div>\n",
+    "\n",
+    "<center><a style=\"font-size: 15pt; font-weight: bold\"; id=\"#safe_least_squares\"> Regularized Superquantile Regression </a></center>\n",
+    "\n",
+    "<br/>\n",
+    "\n",
+    "<p style=\"text-align: right; font-size: 10px;\"><a href=\"#top\">Go to top</a></p>\n",
+    "\n",
+    "With Superquantile Robust Linear Regression, we try to solve the problem \n",
+    "                         $$\\min_{w \\in \\mathbb{R}^n}  Cvar(||Y - w^T X||^2) + \\frac{\\lambda}{2} ||w||^2$$\n",
+    "                         \n",
+    "With this model, we are trying to minimize the highest quantiles of the loss $||Y - w^T X||^2$, seen as a random variable depending on both $X$ and $Y$.\n",
+    "\n",
+    "Let us first build some testing set for that purpose : "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.preprocessing import scale \n",
+    "\n",
+    "dim = 2\n",
+    "size = 150\n",
+    "X, y = make_regression(n_samples=size, n_features=dim, noise=100.0)\n",
+    "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)\n",
+    "\n",
+    "def preprocess_dataset(x_set):\n",
+    "    x_set = scale(x_set)\n",
+    "    x_with_bias = np.ones((x_set.shape[0], x_set.shape[1] + 1))\n",
+    "    x_with_bias[:,:-1] = x_set\n",
+    "    return x_with_bias\n",
+    "\n",
+    "X_train = preprocess_dataset(X_train)\n",
+    "X_test = preprocess_dataset(X_test)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can build now our model :"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "lmbda = 1.0\n",
+    "def L(w,x,y):\n",
+    "    return (y-np.dot(x,w))**2 + lmbda/2.0 * np.dot(w[:-1],w[:-1])\n",
+    "def L_prime(w,x,y):\n",
+    "    w2 = np.copy(w)\n",
+    "    w2[-1] = 0\n",
+    "    return -2*(y-np.dot(x,w))*(x) + lmbda * w2 \n",
+    "\n",
+    "regressor_safe = RiskOptimizer(L,L_prime, algorithm='bfgs', p=0.5)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We fit it :"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "regressor_safe.fit(X_train,y_train)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "and observe the associated score on a testing set :"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Loss Robust Linear Prediction 2333.11931436067\n"
+     ]
+    }
+   ],
+   "source": [
+    "y_pred = regressor_safe.predict(X_test) \n",
+    "print('Loss Robust Linear Prediction ' + str(1.0/size *np.linalg.norm(y_pred - y_test)**2))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "A quick comparison with usual least squares gives :"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Score for Sklearn Ridge Regression 2862.1844456771587\n"
+     ]
+    }
+   ],
+   "source": [
+    "from sklearn.linear_model import Ridge\n",
+    "\n",
+    "ridge_regressor_l_2 = Ridge(alpha=lmbda/2.0,fit_intercept=False)\n",
+    "ridge_regressor_l_2.fit(X_train, y_train)\n",
+    "ground_y_pred = ridge_regressor_l_2.predict(X_test) \n",
+    "print('Score for Sklearn Ridge Regression ' + str(1.0/size *np.linalg.norm(ground_y_pred - y_test)**2))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
