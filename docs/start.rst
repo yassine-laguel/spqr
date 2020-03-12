@@ -23,9 +23,9 @@ is one dimensional array of size :math:`n` representing the targets :
 .. code-block:: python
 
   import numpy as np
-  X = np.random.rand(10,2)
+  X = np.random.rand(100,2)
   w = np.array([1.,2.])
-  y = np.dot(X,w) + np.random.rand(10)
+  y = np.dot(X,w) + np.random.rand(100)
 
 We propose to minimize the conditional value at risk of :math:`L_2`-loss :math:`\frac{1}{2}\|Y-Xw\|^2`:
 
