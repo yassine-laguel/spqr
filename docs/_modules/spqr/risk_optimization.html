@@ -1,0 +1,473 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>spqr.risk_optimization &mdash; SPQR  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> SPQR
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../start.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_detailed/oracles.html">API Oracles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_detailed/algorithms.html">API Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_detailed/risk_optimization.html">API Optimization Framework</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SPQR</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>spqr.risk_optimization</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for spqr.risk_optimization</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Module with definitions of first order oracles class and their smoothed version.</span>
+
+
+<span class="sd">.. moduleauthor:: Yassine LAGUEL</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="k">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">RegressorMixin</span>
+<span class="kn">from</span> <span class="nn">.oracle</span> <span class="k">import</span> <span class="n">OracleDualAveraging</span><span class="p">,</span> <span class="n">OracleSubgradient</span><span class="p">,</span> <span class="n">OracleSmoothGradient</span><span class="p">,</span> <span class="n">IntergratedOracleSubgradient</span>
+<span class="kn">from</span> <span class="nn">.oracle</span> <span class="k">import</span> <span class="n">IntegratedOracleSmoothGradient</span>
+<span class="kn">from</span> <span class="nn">.algorithms.subgradient_method</span> <span class="k">import</span> <span class="n">SubgradientMethod</span>
+<span class="kn">from</span> <span class="nn">.algorithms.gradient_method</span> <span class="k">import</span> <span class="n">GradientMethod</span>
+<span class="kn">from</span> <span class="nn">.algorithms.catalyst</span> <span class="k">import</span> <span class="n">Catalyst</span>
+<span class="kn">from</span> <span class="nn">.algorithms.dual_averaging_advanced</span> <span class="k">import</span> <span class="n">DualAveragingAdvanced</span>
+<span class="kn">from</span> <span class="nn">.algorithms.quasi_newton</span> <span class="k">import</span> <span class="n">BFGS</span>
+<span class="kn">from</span> <span class="nn">.algorithms.dual_averaging</span> <span class="k">import</span> <span class="n">DualAveraging</span>
+<span class="kn">from</span> <span class="nn">.algorithms.nesterov</span> <span class="k">import</span> <span class="n">NesterovMethod</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="RiskOptimizer"><a class="viewcode-back" href="../../api_detailed/risk_optimization.html#spqr.RiskOptimizer">[docs]</a><span class="k">class</span> <span class="nc">RiskOptimizer</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">RegressorMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Base class for optimization of superquantile-based losses.</span>
+
+<span class="sd">            For an input oracle :math:`L` given through two functions ``function_l`` and ``gradient_l``,</span>
+<span class="sd">            this class is an interface to run optimization procedures aimed at minimizing</span>
+<span class="sd">            :math:`w \\mapsto Cvar \\circ L(w)`. Given the regularity of the loss, the algorithm chosen for</span>
+<span class="sd">            optimization should be carefully chosen.</span>
+
+<span class="sd">            :param loss: function associated to the oracle</span>
+<span class="sd">            :param loss_grad: gradient associated to the oracle</span>
+<span class="sd">            :param p: probability level (by default 0.8)</span>
+<span class="sd">            :param algorithm: chosen algorithm for optimization. Allowed inputs are ``&#39;subgradient&#39;``,</span>
+<span class="sd">                ``&#39;dual_averaging&#39;``, ``&#39;gradient&#39;``, ``&#39;nesterov&#39;`` and ``&#39;bfgs&#39;``. Default is ``&#39;subgradient&#39;``</span>
+<span class="sd">            :param w_start: starting point of the algorithm</span>
+<span class="sd">            :param alpha: scale parameter for the direction descent (by default computed through a line search)</span>
+<span class="sd">            :param mu: smoothing parameter associated to the CVar</span>
+<span class="sd">            :param beta_smoothness: estimation of the smoothness of :math:`L` (used for accelerated gradient method).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;subgradient&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;superquantile&#39;</span><span class="p">,</span> <span class="n">w_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dual_averaging_lmbda</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">beta_smoothness</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_treat_parameters</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">w_start</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span>
+                               <span class="n">dual_averaging_lmbda</span><span class="p">,</span> <span class="n">beta_smoothness</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;superquantile&#39;</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;dual_averaging_basic&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">OracleDualAveraging</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">DualAveraging</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;subgradient&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">OracleSubgradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">SubgradientMethod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;dual_averaging&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">OracleSubgradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">DualAveragingAdvanced</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;gradient&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">OracleSmoothGradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">],</span>
+                                                   <span class="n">smoothing_parameter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">GradientMethod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;catalyst&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">OracleSmoothGradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">],</span>
+                                                   <span class="n">smoothing_parameter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">Catalyst</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;nesterov&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">OracleSmoothGradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">],</span>
+                                                   <span class="n">smoothing_parameter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">NesterovMethod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;bfgs&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">OracleSmoothGradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">],</span>
+                                                   <span class="n">smoothing_parameter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">BFGS</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;hyperquantile&#39;</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;subgradient&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">IntergratedOracleSubgradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">SubgradientMethod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;dual_averaging&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">IntergratedOracleSubgradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">DualAveragingAdvanced</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;gradient&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">IntegratedOracleSmoothGradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">],</span>
+                                                             <span class="n">smoothing_parameter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">GradientMethod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;catalyst&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">IntegratedOracleSmoothGradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">],</span>
+                                                             <span class="n">smoothing_parameter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">Catalyst</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;nesterov&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">IntegratedOracleSmoothGradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">],</span>
+                                                             <span class="n">smoothing_parameter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">NesterovMethod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;bfgs&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span> <span class="o">=</span> <span class="n">IntegratedOracleSmoothGradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">],</span>
+                                                             <span class="n">smoothing_parameter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">BFGS</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">solution</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_iterates</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="RiskOptimizer.fit"><a class="viewcode-back" href="../../api_detailed/risk_optimization.html#spqr.RiskOptimizer.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">verboose_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Runs the optimization of the model</span>
+
+<span class="sd">                :param ``numpy.ndarray`` x: matrix whose lines are realizations of random variable :math:`X`</span>
+<span class="sd">                :param ``numpy.array`` y: vector whose coefficients are realizations of random variable :math:`y`</span>
+<span class="sd">                :param ``bool`` verboose_mode: If ``True``, saves function values during iterations of selected algorithm as well as time since start.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_complete_params_and_scale_X</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">verboose_mode</span><span class="o">=</span><span class="n">verboose_mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">w</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_iterates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">list_iterates</span></div>
+
+<div class="viewcode-block" id="RiskOptimizer.predict"><a class="viewcode-back" href="../../api_detailed/risk_optimization.html#spqr.RiskOptimizer.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Gives a prediction of x</span>
+
+<span class="sd">                :param ``numpy.array`` x: input whose label is to predict</span>
+<span class="sd">                :return:  value of the prediction</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">w</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RiskOptimizer.score"><a class="viewcode-back" href="../../api_detailed/risk_optimization.html#spqr.RiskOptimizer.score">[docs]</a>    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; To be implemented in next release</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># n = len(y_true)</span>
+        <span class="c1"># a = np.sum([(y_true[i] - y_pred[i])**2 for i in range(n)])/n</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+    <span class="k">def</span> <span class="nf">_treat_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">w_start</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span>
+                          <span class="n">dual_averaging_lmbda</span><span class="p">,</span> <span class="n">beta_smoothness</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+
+        <span class="n">arguments</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span>
+        <span class="k">del</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;self&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_params</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">given_parameter</span> <span class="ow">in</span> <span class="n">arguments</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">arguments</span><span class="p">[</span><span class="n">given_parameter</span><span class="p">]</span><span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">given_parameter</span><span class="p">)]</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="n">given_parameter</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;max_iter&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_nb_iterations&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;max_iter&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_create_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="c1"># General Parameters</span>
+            <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;subgradient&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;w_start&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;p&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+            <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;alpha_start&#39;</span><span class="p">:</span> <span class="mf">100.0</span><span class="p">,</span>
+            <span class="s1">&#39;max_iter&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+
+            <span class="c1"># Smoothing_parameters</span>
+            <span class="s1">&#39;mu&#39;</span><span class="p">:</span> <span class="mf">1000.0</span><span class="p">,</span>
+
+            <span class="c1"># Subgradient Parameters</span>
+            <span class="s1">&#39;subgradient_stepsize_decrease&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.6</span><span class="p">),</span>
+            <span class="s1">&#39;subgradient_nb_iterations&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+
+            <span class="c1"># Dual Averaging Parameters</span>
+            <span class="s1">&#39;dual_averaging_basic_stepsize_decrease&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.6</span><span class="p">),</span>
+            <span class="s1">&#39;dual_averaging_basic_nb_iterations&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="s1">&#39;dual_averaging_basic_gamma&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="s1">&#39;dual_averaging_basic_lmbda&#39;</span><span class="p">:</span> <span class="mf">0.00000001</span><span class="p">,</span>
+
+            <span class="c1"># Dual Averaging Advanced Parameters</span>
+            <span class="s1">&#39;dual_averaging_stepsize_decrease&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.6</span><span class="p">),</span>
+            <span class="s1">&#39;dual_averaging_nb_iterations&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="s1">&#39;dual_averaging_gamma&#39;</span><span class="p">:</span> <span class="mf">100.0</span><span class="p">,</span>
+            <span class="s1">&#39;dual_averaging_alpha&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+
+            <span class="c1"># Gradient Parameters</span>
+            <span class="s1">&#39;gradient_stepsize_decrease&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+            <span class="s1">&#39;gradient_nb_iterations&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+
+            <span class="c1"># Catalyst Parameters</span>
+            <span class="s1">&#39;catalyst_nb_iterations&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="s1">&#39;catalyst_kappa&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+
+            <span class="c1"># Nesterov Parameters</span>
+            <span class="s1">&#39;nesterov_nb_iterations&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="s1">&#39;beta_smoothness&#39;</span><span class="p">:</span> <span class="mf">1000.0</span><span class="p">,</span>
+
+            <span class="c1"># BFGS Parameters</span>
+            <span class="s1">&#39;bfgs_nb_iterations&#39;</span><span class="p">:</span> <span class="mi">1000</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">params</span>
+
+    <span class="k">def</span> <span class="nf">_complete_params_and_scale_X</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;w_start&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;w_start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;w_start&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_algoritm_params</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;catalyst&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;dual_averaging_basic&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_find_alpha</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;dual_averaging_basic&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_find_alpha_da</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_find_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;alpha_start&#39;</span><span class="p">]</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;w_start&#39;</span><span class="p">]</span>
+
+        <span class="n">a</span> <span class="o">=</span> <span class="mf">0.99</span>
+        <span class="n">c1</span> <span class="o">=</span> <span class="mf">0.0001</span>
+
+        <span class="n">gradient</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="o">.</span><span class="n">g</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">gradient_norm_square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">gradient</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">function_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="n">condition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">function_value</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">c1</span> <span class="o">*</span> <span class="n">gradient_norm_square</span>
+
+        <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+            <span class="n">alpha</span> <span class="o">*=</span> <span class="n">a</span>
+            <span class="n">condition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">function_value</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">c1</span> <span class="o">*</span> <span class="n">gradient_norm_square</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_algoritm_params</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_find_alpha_da</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;alpha_start&#39;</span><span class="p">]</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;w_start&#39;</span><span class="p">]</span>
+
+        <span class="n">a</span> <span class="o">=</span> <span class="mf">0.99</span>
+        <span class="n">c1</span> <span class="o">=</span> <span class="mf">0.0001</span>
+
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+
+        <span class="n">gradient</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="o">.</span><span class="n">g</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">gradient_w</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">[:</span><span class="n">d</span><span class="p">]</span>
+        <span class="n">gradient_q</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">[</span><span class="n">d</span><span class="p">:]</span>
+
+        <span class="n">lmbda</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;dual_averaging_basic_lmbda&#39;</span><span class="p">]</span>
+        <span class="n">gradient_norm_square</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">lmbda</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">gradient_w</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> \
+                             <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">lmbda</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">gradient_q</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">function_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="n">condition</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">gradient_w</span><span class="p">,</span> <span class="n">q</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">gradient_q</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">&gt;</span>
+                     <span class="n">function_value</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">c1</span> <span class="o">*</span> <span class="n">gradient_norm_square</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="n">condition</span><span class="p">:</span>
+            <span class="n">alpha</span> <span class="o">*=</span> <span class="n">a</span>
+            <span class="n">condition</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oracle</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">gradient_w</span><span class="p">,</span> <span class="n">q</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">gradient_q</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">&gt;</span>
+                         <span class="n">function_value</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">c1</span> <span class="o">*</span> <span class="n">gradient_norm_square</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_algoritm_params</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_update_algoritm_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Y. LAGUEL, J. MALICK, Z. HARCHAOUI
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
