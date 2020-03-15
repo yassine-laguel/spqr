@@ -17,24 +17,24 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <script type="text/javascript" src="../static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+        <script type="text/javascript" src="../static/jquery.js"></script>
+        <script type="text/javascript" src="../static/underscore.js"></script>
+        <script type="text/javascript" src="../static/doctools.js"></script>
+        <script type="text/javascript" src="../static/language_data.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
+    <script type="text/javascript" src="../static/js/theme.js"></script>
 
     
 
   
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Risk Optimization" href="risk_optimization.html" />
@@ -141,7 +141,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/api_detailed/algorithms.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../sources/api_detailed/algorithms.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -184,7 +184,7 @@
 <h2>Algorithms for non-differentiable losses<a class="headerlink" href="#algorithms-for-non-differentiable-losses" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="spqr.algorithms.SubgradientMethod">
-<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">SubgradientMethod</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/subgradient_method.html#SubgradientMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.SubgradientMethod" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">SubgradientMethod</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/subgradient_method.html#SubgradientMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.SubgradientMethod" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class aimed at running subgradient method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -197,7 +197,7 @@
 </dl>
 <dl class="method">
 <dt id="spqr.algorithms.SubgradientMethod.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/subgradient_method.html#SubgradientMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.SubgradientMethod.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/subgradient_method.html#SubgradientMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.SubgradientMethod.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs the subgradient method</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -215,10 +215,10 @@ algorithm as well as time since start.</p></li>
 
 <dl class="class">
 <dt id="spqr.algorithms.DualAveraging">
-<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">DualAveraging</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/dual_averaging.html#DualAveraging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.DualAveraging" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">DualAveraging</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/dual_averaging.html#DualAveraging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.DualAveraging" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="spqr.algorithms.DualAveraging.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/dual_averaging.html#DualAveraging.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.DualAveraging.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/dual_averaging.html#DualAveraging.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.DualAveraging.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs a bacic version of Dual Averaging Algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -239,10 +239,10 @@ algorithm as well as time since start.</p></li>
 <h2>Algorithms for differentiable losses<a class="headerlink" href="#algorithms-for-differentiable-losses" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="spqr.algorithms.GradientMethod">
-<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">GradientMethod</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/gradient_method.html#GradientMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.GradientMethod" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">GradientMethod</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/gradient_method.html#GradientMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.GradientMethod" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="spqr.algorithms.GradientMethod.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/gradient_method.html#GradientMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.GradientMethod.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/gradient_method.html#GradientMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.GradientMethod.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs Gradient Method</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -260,7 +260,7 @@ algorithm as well as time since start.</p></li>
 
 <dl class="class">
 <dt id="spqr.algorithms.NesterovMethod">
-<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">NesterovMethod</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/nesterov.html#NesterovMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.NesterovMethod" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">NesterovMethod</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/nesterov.html#NesterovMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.NesterovMethod" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class aimed at running Accelerated Gradient Method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -273,7 +273,7 @@ algorithm as well as time since start.</p></li>
 </dl>
 <dl class="method">
 <dt id="spqr.algorithms.NesterovMethod.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/nesterov.html#NesterovMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.NesterovMethod.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/nesterov.html#NesterovMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.NesterovMethod.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs Nesterov Algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -291,7 +291,7 @@ algorithm as well as time since start.</p></li>
 
 <dl class="class">
 <dt id="spqr.algorithms.BFGS">
-<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">BFGS</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/quasi_newton.html#BFGS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.BFGS" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">BFGS</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/quasi_newton.html#BFGS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.BFGS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class aimed at running Low memory bfgs method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -304,7 +304,7 @@ algorithm as well as time since start.</p></li>
 </dl>
 <dl class="method">
 <dt id="spqr.algorithms.BFGS.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/algorithms/quasi_newton.html#BFGS.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.BFGS.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/quasi_newton.html#BFGS.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.BFGS.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs low-memory BFGS algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

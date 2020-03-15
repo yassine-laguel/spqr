@@ -17,24 +17,24 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <script type="text/javascript" src="../static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+        <script type="text/javascript" src="../static/jquery.js"></script>
+        <script type="text/javascript" src="../static/underscore.js"></script>
+        <script type="text/javascript" src="../static/doctools.js"></script>
+        <script type="text/javascript" src="../static/language_data.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
+    <script type="text/javascript" src="../static/js/theme.js"></script>
 
     
 
   
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="prev" title="Optimization Algorithms" href="algorithms.html" /> 
@@ -136,7 +136,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/api_detailed/risk_optimization.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../sources/api_detailed/risk_optimization.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -177,7 +177,7 @@
 <h1>Risk Optimization<a class="headerlink" href="#risk-optimization" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="spqr.RiskOptimizer">
-<em class="property">class </em><code class="descclassname">spqr.</code><code class="descname">RiskOptimizer</code><span class="sig-paren">(</span><em>loss</em>, <em>loss_grad</em>, <em>algorithm='subgradient'</em>, <em>mode='superquantile'</em>, <em>w_start=None</em>, <em>p=None</em>, <em>alpha=None</em>, <em>mu=None</em>, <em>max_iter=None</em>, <em>dual_averaging_lmbda=None</em>, <em>beta_smoothness=None</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/risk_optimization.html#RiskOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.RiskOptimizer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">spqr.</code><code class="descname">RiskOptimizer</code><span class="sig-paren">(</span><em>loss</em>, <em>loss_grad</em>, <em>algorithm='subgradient'</em>, <em>mode='superquantile'</em>, <em>w_start=None</em>, <em>p=None</em>, <em>alpha=None</em>, <em>mu=None</em>, <em>max_iter=None</em>, <em>dual_averaging_lmbda=None</em>, <em>beta_smoothness=None</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/risk_optimization.html#RiskOptimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.RiskOptimizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for optimization of superquantile-based losses.</p>
 <p>For an input oracle <span class="math notranslate nohighlight">\(L\)</span> given through two functions <code class="docutils literal notranslate"><span class="pre">function_l</span></code> and <code class="docutils literal notranslate"><span class="pre">gradient_l</span></code>,
 this class is an interface to run optimization procedures aimed at minimizing
@@ -200,7 +200,7 @@ optimization should be carefully chosen.</p>
 </dl>
 <dl class="method">
 <dt id="spqr.RiskOptimizer.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/risk_optimization.html#RiskOptimizer.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.RiskOptimizer.fit" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/risk_optimization.html#RiskOptimizer.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.RiskOptimizer.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs the optimization of the model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -215,7 +215,7 @@ optimization should be carefully chosen.</p>
 
 <dl class="method">
 <dt id="spqr.RiskOptimizer.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/risk_optimization.html#RiskOptimizer.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.RiskOptimizer.predict" title="Permalink to this definition">¶</a></dt>
+<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/risk_optimization.html#RiskOptimizer.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.RiskOptimizer.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gives a prediction of x</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -229,7 +229,7 @@ optimization should be carefully chosen.</p>
 
 <dl class="method">
 <dt id="spqr.RiskOptimizer.score">
-<code class="descname">score</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/risk_optimization.html#RiskOptimizer.score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.RiskOptimizer.score" title="Permalink to this definition">¶</a></dt>
+<code class="descname">score</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/risk_optimization.html#RiskOptimizer.score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.RiskOptimizer.score" title="Permalink to this definition">¶</a></dt>
 <dd><p>To be implemented in next release</p>
 </dd></dl>
 

@@ -17,24 +17,24 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <script type="text/javascript" src="../static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../static/documentation_options.js"></script>
+        <script type="text/javascript" src="../static/jquery.js"></script>
+        <script type="text/javascript" src="../static/underscore.js"></script>
+        <script type="text/javascript" src="../static/doctools.js"></script>
+        <script type="text/javascript" src="../static/language_data.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
+    <script type="text/javascript" src="../static/js/theme.js"></script>
 
     
 
   
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Optimization Algorithms" href="algorithms.html" />
@@ -141,7 +141,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/api_detailed/oracles.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../sources/api_detailed/oracles.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -184,7 +184,7 @@
 <h2>First Order Oracles for superquantile optimization<a class="headerlink" href="#first-order-oracles-for-superquantile-optimization" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="spqr.OracleSubgradient">
-<em class="property">class </em><code class="descclassname">spqr.</code><code class="descname">OracleSubgradient</code><span class="sig-paren">(</span><em>loss</em>, <em>loss_grad</em>, <em>p</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#OracleSubgradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSubgradient" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">spqr.</code><code class="descname">OracleSubgradient</code><span class="sig-paren">(</span><em>loss</em>, <em>loss_grad</em>, <em>p</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#OracleSubgradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSubgradient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class that instantiate the superquantile oracle for a non differentiable loss</p>
 <p>For an input oracle <span class="math notranslate nohighlight">\(L\)</span> given through two functions <code class="docutils literal notranslate"><span class="pre">loss</span></code> and <code class="docutils literal notranslate"><span class="pre">loss_grad</span></code>,
 this class is an interface to compute the value and a subgradient of the function
@@ -200,19 +200,19 @@ this class is an interface to compute the value and a subgradient of the functio
 </dl>
 <dl class="method">
 <dt id="spqr.OracleSubgradient.cost_function">
-<code class="descname">cost_function</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#OracleSubgradient.cost_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSubgradient.cost_function" title="Permalink to this definition">¶</a></dt>
+<code class="descname">cost_function</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#OracleSubgradient.cost_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSubgradient.cost_function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the value of <span class="math notranslate nohighlight">\(w \mapsto Cvar \circ L(w)\)</span> for the dataset <span class="math notranslate nohighlight">\((x,y)\)</span></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="spqr.OracleSubgradient.f">
-<code class="descname">f</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#OracleSubgradient.f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSubgradient.f" title="Permalink to this definition">¶</a></dt>
+<code class="descname">f</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#OracleSubgradient.f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSubgradient.f" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does the exact same job as OracleSubgradient.cost_function</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="spqr.OracleSubgradient.g">
-<code class="descname">g</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#OracleSubgradient.g"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSubgradient.g" title="Permalink to this definition">¶</a></dt>
+<code class="descname">g</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#OracleSubgradient.g"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSubgradient.g" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes a subgradient of <span class="math notranslate nohighlight">\(w \mapsto Cvar \circ L(w)\)</span> for the dataset <span class="math notranslate nohighlight">\((x,y)\)</span></p>
 </dd></dl>
 
@@ -220,7 +220,7 @@ this class is an interface to compute the value and a subgradient of the functio
 
 <dl class="class">
 <dt id="spqr.OracleSmoothGradient">
-<em class="property">class </em><code class="descclassname">spqr.</code><code class="descname">OracleSmoothGradient</code><span class="sig-paren">(</span><em>loss</em>, <em>loss_grad</em>, <em>p</em>, <em>smoothing_parameter=1000.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#OracleSmoothGradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSmoothGradient" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">spqr.</code><code class="descname">OracleSmoothGradient</code><span class="sig-paren">(</span><em>loss</em>, <em>loss_grad</em>, <em>p</em>, <em>smoothing_parameter=1000.0</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#OracleSmoothGradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSmoothGradient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class that instantiate the superquantile oracle for a differentiable loss</p>
 <p>For an input oracle <span class="math notranslate nohighlight">\(L\)</span> given through two functions <code class="docutils literal notranslate"><span class="pre">loss</span></code> and <code class="docutils literal notranslate"><span class="pre">grad_loss</span></code>,
 this class is an interface to compute the value and the gradient of the function
@@ -237,19 +237,19 @@ this class is an interface to compute the value and the gradient of the function
 </dl>
 <dl class="method">
 <dt id="spqr.OracleSmoothGradient.cost_function">
-<code class="descname">cost_function</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#OracleSmoothGradient.cost_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSmoothGradient.cost_function" title="Permalink to this definition">¶</a></dt>
+<code class="descname">cost_function</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#OracleSmoothGradient.cost_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSmoothGradient.cost_function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the value of <span class="math notranslate nohighlight">\(w \mapsto Cvar \circ L(w)\)</span> for the dataset <span class="math notranslate nohighlight">\((x,y)\)</span></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="spqr.OracleSmoothGradient.f">
-<code class="descname">f</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#OracleSmoothGradient.f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSmoothGradient.f" title="Permalink to this definition">¶</a></dt>
+<code class="descname">f</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#OracleSmoothGradient.f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSmoothGradient.f" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the value of the smooth approximation <span class="math notranslate nohighlight">\(w \mapsto Cvar \circ L(w)\)</span></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="spqr.OracleSmoothGradient.g">
-<code class="descname">g</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#OracleSmoothGradient.g"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSmoothGradient.g" title="Permalink to this definition">¶</a></dt>
+<code class="descname">g</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#OracleSmoothGradient.g"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.OracleSmoothGradient.g" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the gradient of the smooth approximation of <span class="math notranslate nohighlight">\(w \mapsto Cvar \circ L(w)\)</span></p>
 </dd></dl>
 
@@ -260,7 +260,7 @@ this class is an interface to compute the value and the gradient of the function
 <h2>First Order Oracles for hyperquantile optimization<a class="headerlink" href="#first-order-oracles-for-hyperquantile-optimization" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="spqr.IntergratedOracleSubgradient">
-<em class="property">class </em><code class="descclassname">spqr.</code><code class="descname">IntergratedOracleSubgradient</code><span class="sig-paren">(</span><em>loss</em>, <em>loss_grad</em>, <em>p</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#IntergratedOracleSubgradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntergratedOracleSubgradient" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">spqr.</code><code class="descname">IntergratedOracleSubgradient</code><span class="sig-paren">(</span><em>loss</em>, <em>loss_grad</em>, <em>p</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#IntergratedOracleSubgradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntergratedOracleSubgradient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class that instantiate the hyperquantile oracle for a non differentiable loss</p>
 <p>For an input oracle <span class="math notranslate nohighlight">\(L\)</span> given through two functions <code class="docutils literal notranslate"><span class="pre">loss</span></code> and <code class="docutils literal notranslate"><span class="pre">loss_grad</span></code>,
 this class is an interface to compute the value and a subgradient of the function
@@ -280,19 +280,19 @@ this class is an interface to compute the value and a subgradient of the functio
 </div></blockquote>
 <dl class="method">
 <dt id="spqr.IntergratedOracleSubgradient.cost_function">
-<code class="descname">cost_function</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#IntergratedOracleSubgradient.cost_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntergratedOracleSubgradient.cost_function" title="Permalink to this definition">¶</a></dt>
+<code class="descname">cost_function</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#IntergratedOracleSubgradient.cost_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntergratedOracleSubgradient.cost_function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the value of <span class="math notranslate nohighlight">\(w \mapsto ar{Cvar} \circ L(w)\)</span> for the dataset <span class="math notranslate nohighlight">\((x,y)\)</span></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="spqr.IntergratedOracleSubgradient.f">
-<code class="descname">f</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#IntergratedOracleSubgradient.f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntergratedOracleSubgradient.f" title="Permalink to this definition">¶</a></dt>
+<code class="descname">f</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#IntergratedOracleSubgradient.f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntergratedOracleSubgradient.f" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does the exact same job as OracleSubgradient.cost_function</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="spqr.IntergratedOracleSubgradient.g">
-<code class="descname">g</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#IntergratedOracleSubgradient.g"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntergratedOracleSubgradient.g" title="Permalink to this definition">¶</a></dt>
+<code class="descname">g</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#IntergratedOracleSubgradient.g"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntergratedOracleSubgradient.g" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes a subgradient of <span class="math notranslate nohighlight">\(w \mapsto ar{Cvar} \circ L(w)\)</span> for the dataset <span class="math notranslate nohighlight">\((x,y)\)</span></p>
 </dd></dl>
 
@@ -300,7 +300,7 @@ this class is an interface to compute the value and a subgradient of the functio
 
 <dl class="class">
 <dt id="spqr.IntegratedOracleSmoothGradient">
-<em class="property">class </em><code class="descclassname">spqr.</code><code class="descname">IntegratedOracleSmoothGradient</code><span class="sig-paren">(</span><em>loss</em>, <em>loss_grad</em>, <em>p</em>, <em>smoothing_parameter=1000.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#IntegratedOracleSmoothGradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntegratedOracleSmoothGradient" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">spqr.</code><code class="descname">IntegratedOracleSmoothGradient</code><span class="sig-paren">(</span><em>loss</em>, <em>loss_grad</em>, <em>p</em>, <em>smoothing_parameter=1000.0</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#IntegratedOracleSmoothGradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntegratedOracleSmoothGradient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class that instantiate the hyperquantile oracle for a differentiable loss</p>
 <p>For an input oracle <span class="math notranslate nohighlight">\(L\)</span> given through two functions <code class="docutils literal notranslate"><span class="pre">loss</span></code> and <code class="docutils literal notranslate"><span class="pre">loss_grad</span></code>,
 this class is an interface to compute the value and the gradient of the function
@@ -323,19 +323,19 @@ this class is an interface to compute the value and the gradient of the function
 </div></blockquote>
 <dl class="method">
 <dt id="spqr.IntegratedOracleSmoothGradient.cost_function">
-<code class="descname">cost_function</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#IntegratedOracleSmoothGradient.cost_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntegratedOracleSmoothGradient.cost_function" title="Permalink to this definition">¶</a></dt>
+<code class="descname">cost_function</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#IntegratedOracleSmoothGradient.cost_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntegratedOracleSmoothGradient.cost_function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the value of <span class="math notranslate nohighlight">\(w \mapsto ar{Cvar} \circ L(w)\)</span> for the dataset <span class="math notranslate nohighlight">\((x,y)\)</span></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="spqr.IntegratedOracleSmoothGradient.f">
-<code class="descname">f</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#IntegratedOracleSmoothGradient.f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntegratedOracleSmoothGradient.f" title="Permalink to this definition">¶</a></dt>
+<code class="descname">f</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#IntegratedOracleSmoothGradient.f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntegratedOracleSmoothGradient.f" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the value of the smooth approximation <span class="math notranslate nohighlight">\(w \mapsto ar{Cvar}  \circ L(w)\)</span></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="spqr.IntegratedOracleSmoothGradient.g">
-<code class="descname">g</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spqr/oracle.html#IntegratedOracleSmoothGradient.g"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntegratedOracleSmoothGradient.g" title="Permalink to this definition">¶</a></dt>
+<code class="descname">g</code><span class="sig-paren">(</span><em>w</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/oracle.html#IntegratedOracleSmoothGradient.g"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.IntegratedOracleSmoothGradient.g" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the gradient of the smooth approximation <span class="math notranslate nohighlight">\(w \mapsto ar{Cvar}  \circ L(w)\)</span></p>
 </dd></dl>
 
