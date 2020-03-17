@@ -30,12 +30,12 @@ class NesterovMethod:
         self.lmbda = 0.
         self.x = np.copy(self.w)
 
-    def run(self, x, y, verboose_mode=False):
+    def run(self, x, y, verbose_mode=False):
         """ Runs Nesterov Algorithm
 
                 :param ``numpy.ndarray`` x: matrix whose lines are realizations of random variable X
                 :param ``numpy.array`` y: vector whose coefficients are realizations of random variable y
-                :param ``bool`` verboose_mode: If ``True``, saves function values during iterations of selected
+                :param ``bool`` verbose_mode: If ``True``, saves function values during iterations of selected
                                 algorithm as well as time since start.
         """
 
@@ -49,7 +49,7 @@ class NesterovMethod:
 
         while counter < self.params['nesterov_nb_iterations']:
 
-            if verboose_mode:
+            if verbose_mode:
                 self.list_times.append(time() - start_time)
                 self.list_values.append(self.oracle.cost_function(self.w, x, y))
                 sys.stdout.write('%d / %d  iterations completed \r' % (counter, self.params['nesterov_nb_iterations']))

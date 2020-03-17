@@ -109,16 +109,16 @@ class RiskOptimizer(BaseEstimator, RegressorMixin):
         self.solution = 0.
         self.list_iterates = []
 
-    def fit(self, x, y, verboose_mode=False):
+    def fit(self, x, y, verbose_mode=False):
         """ Runs the optimization of the model
 
                 :param ``numpy.ndarray`` x: matrix whose lines are realizations of random variable :math:`X`
                 :param ``numpy.array`` y: vector whose coefficients are realizations of random variable :math:`y`
-                :param ``bool`` verboose_mode: If ``True``, saves function values during iterations of selected algorithm as well as time since start.
+                :param ``bool`` verbose_mode: If ``True``, saves function values during iterations of selected algorithm as well as time since start.
         """
 
         self._complete_params_and_scale_X(x, y)
-        self.algorithm.run(x, y, verboose_mode=verboose_mode)
+        self.algorithm.run(x, y, verbose_mode=verbose_mode)
         self.solution = self.algorithm.w
         self.list_iterates = self.algorithm.list_iterates
 

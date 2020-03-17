@@ -47,7 +47,7 @@ class Catalyst:
         optimizer.run()
         return optimizer.x
 
-    def run(self, X, y, verboose_mode=False):
+    def run(self, X, y, verbose_mode=False):
 
         self.list_iterates = [self.w]
 
@@ -92,7 +92,7 @@ class Catalyst:
                 while counter < self.params['catalyst_nb_iterations']:
                     self.list_iterates.append(self.w)
                     counter += 1
-                    if verboose_mode:
+                    if verbose_mode:
                         sys.stdout.write('%d / %d  iterations completed \r' % (counter, self.params['catalyst_nb_iterations']))
                         sys.stdout.flush()
                 break
@@ -103,7 +103,7 @@ class Catalyst:
             alpha = alpha_next
             counter += 1
 
-            if verboose_mode:
+            if verbose_mode:
                 sys.stdout.write('%d / %d  iterations completed \r' % (counter, self['catalyst_nb_iterations']))
                 sys.stdout.flush()
 

@@ -23,18 +23,18 @@ class DualAveragingAdvanced:
         self.list_values = []
         self.list_times = []
 
-    def run(self, x, y, verboose_mode=False):
+    def run(self, x, y, verbose_mode=False):
         """ Runs Dual Averaging Algorithm
 
                 :param ``numpy.ndarray`` x: matrix whose lines are realizations of random variable X
                 :param ``numpy.array`` y: vector whose coefficients are realizations of random variable y
-                :param ``bool`` verboose_mode: If ``True``, saves function values during iterations of selected
+                :param ``bool`` verbose_mode: If ``True``, saves function values during iterations of selected
                         algorithm as well as time since start.
         """
 
         print(1.0/self.params['alpha'])
 
-        if verboose_mode:
+        if verbose_mode:
             start_time = time()
 
         beta_hat = 1.0
@@ -49,7 +49,7 @@ class DualAveragingAdvanced:
         counter = 0
         while counter < self.params['dual_averaging_nb_iterations']:
 
-            if verboose_mode:
+            if verbose_mode:
                 self.list_times.append(time() - start_time)
                 self.list_values.append(self.oracle.cost_function(self.w, x, y))
                 sys.stdout.write('%d / %d  iterations '

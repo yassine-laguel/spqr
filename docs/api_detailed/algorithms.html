@@ -197,14 +197,14 @@
 </dl>
 <dl class="method">
 <dt id="spqr.algorithms.SubgradientMethod.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/subgradient_method.html#SubgradientMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.SubgradientMethod.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verbose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/subgradient_method.html#SubgradientMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.SubgradientMethod.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs the subgradient method</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – matrix whose lines are realizations of random variable X</p></li>
 <li><p><strong>y</strong> (<em>numpy.array</em>) – vector whose coefficients are realizations of random variable y</p></li>
-<li><p><strong>verboose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
+<li><p><strong>verbose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
 algorithm as well as time since start.</p></li>
 </ul>
 </dd>
@@ -218,14 +218,14 @@ algorithm as well as time since start.</p></li>
 <em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">DualAveraging</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/dual_averaging.html#DualAveraging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.DualAveraging" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="spqr.algorithms.DualAveraging.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/dual_averaging.html#DualAveraging.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.DualAveraging.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verbose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/dual_averaging.html#DualAveraging.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.DualAveraging.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs a bacic version of Dual Averaging Algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – matrix whose lines are realizations of random variable X</p></li>
 <li><p><strong>y</strong> (<em>numpy.array</em>) – vector whose coefficients are realizations of random variable y</p></li>
-<li><p><strong>verboose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
+<li><p><strong>verbose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
 algorithm as well as time since start.</p></li>
 </ul>
 </dd>
@@ -242,14 +242,14 @@ algorithm as well as time since start.</p></li>
 <em class="property">class </em><code class="descclassname">spqr.algorithms.</code><code class="descname">GradientMethod</code><span class="sig-paren">(</span><em>oracle</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/gradient_method.html#GradientMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.GradientMethod" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="spqr.algorithms.GradientMethod.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/gradient_method.html#GradientMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.GradientMethod.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verbose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/gradient_method.html#GradientMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.GradientMethod.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs Gradient Method</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – matrix whose lines are realizations of random variable X</p></li>
 <li><p><strong>y</strong> (<em>numpy.array</em>) – vector whose coefficients are realizations of random variable y</p></li>
-<li><p><strong>verboose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
+<li><p><strong>verbose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
 algorithm as well as time since start.</p></li>
 </ul>
 </dd>
@@ -273,14 +273,14 @@ algorithm as well as time since start.</p></li>
 </dl>
 <dl class="method">
 <dt id="spqr.algorithms.NesterovMethod.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/nesterov.html#NesterovMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.NesterovMethod.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>verbose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/nesterov.html#NesterovMethod.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.NesterovMethod.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs Nesterov Algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – matrix whose lines are realizations of random variable X</p></li>
 <li><p><strong>y</strong> (<em>numpy.array</em>) – vector whose coefficients are realizations of random variable y</p></li>
-<li><p><strong>verboose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
+<li><p><strong>verbose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
 algorithm as well as time since start.</p></li>
 </ul>
 </dd>
@@ -304,14 +304,14 @@ algorithm as well as time since start.</p></li>
 </dl>
 <dl class="method">
 <dt id="spqr.algorithms.BFGS.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>verboose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/quasi_newton.html#BFGS.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.BFGS.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>verbose_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../modules/spqr/algorithms/quasi_newton.html#BFGS.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spqr.algorithms.BFGS.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs low-memory BFGS algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>numpy.ndarray</em>) – matrix whose lines are realizations of random variable X</p></li>
 <li><p><strong>y</strong> (<em>numpy.array</em>) – vector whose coefficients are realizations of random variable y</p></li>
-<li><p><strong>verboose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
+<li><p><strong>verbose_mode</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, saves function values during iterations of selected
 algorithm as well as time since start.</p></li>
 </ul>
 </dd>
