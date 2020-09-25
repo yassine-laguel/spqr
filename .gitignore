@@ -11,4 +11,5 @@ docs/.DS_Store
 Untitled.ipynb
 experiment_joint_subgradient.ipynb
 exps/
+.gitignore
 .idea
