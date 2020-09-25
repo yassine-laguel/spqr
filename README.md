@@ -5,9 +5,9 @@ SPQR is a python toolbox for optimization of superquantile-based risk measures. 
 For a more detailed description of the toolbox and the setup instructions see the [documentation](https://yassine-laguel.github.io/spqr/).
 
 ## Authors
-[Yassine Laguel](https://yassine-laguel.github.io)
-[Jérôme Malick](https://ljk.imag.fr/membres/Jerome.Malick/)
-[Zaid Harchaoui](http://faculty.washington.edu/zaid/)
+[Yassine Laguel](https://yassine-laguel.github.io)  
+[Jérôme Malick](https://ljk.imag.fr/membres/Jerome.Malick/)  
+[Zaid Harchaoui](http://faculty.washington.edu/zaid/)  
 
 ## License
 This project is licensed under the GPLv3 License - see the [LICENSE.md](LICENSE.md) file for details.
