@@ -1,5 +1,4 @@
 # SPQR
-====================================
 SPQR is a python toolbox for optimization of superquantile-based risk measures. This toolbox comes with the companion paper "[First-order optimization for superquantile-based supervised learning](https://yassine-laguel.github.io/_pages/publications/)".
 
 ## Documentation
