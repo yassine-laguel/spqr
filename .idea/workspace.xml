@@ -52,53 +52,9 @@
       <change beforePath="$PROJECT_DIR$/../subgradient_method/dumb_tests.ipynb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../subgradient_method/non_differentiability.ipynb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../superquantile_regression.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project-template/supyquantile/algorithms/dual_averaging.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/.circleci/config.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/.coveragerc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/.readthedocs.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/MANIFEST.in" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/README.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/Toolbox Demonstration.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/appveyor.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/doc/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/doc/_static/css/project-template.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/doc/_static/js/copybutton.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/doc/_templates/class.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/doc/_templates/function.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/doc/_templates/numpydoc_docstring.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/doc/api.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/doc/conf.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/doc/index.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/doc/make.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/doc/quick_start.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/doc/user_guide.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/dumb_test.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/enviornment.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/examples/README.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/examples/plot_classifier.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/examples/plot_template.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/examples/plot_transformer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/img/logo_ljk.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/requirements.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/setup.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/setup.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/_template.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/_version.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/algorithms/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/algorithms/catalyst.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/algorithms/dual_averaging.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/algorithms/gradient_method.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/algorithms/quasi_newton.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/algorithms/subgradient_method.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/measures.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/oracle.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/risk_optimization.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/tests/test_common.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox/supyquantile/tests/test_template.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plot_quantile_regression.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/talk_figure_quantile_regression2.pdf" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -145,13 +101,42 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="374434565">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Python" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="py" value="100" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Python" value="100" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spqr/risk_optimization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7">
+            <state relative-caret-position="170">
               <caret line="20" column="46" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
               <folding>
                 <element signature="e#124#178#0" expanded="true" />
@@ -162,16 +147,26 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spqr/algorithms/catalyst.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spqr/algorithms/dual_averaging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7" />
+            <state relative-caret-position="387">
+              <caret line="54" column="69" selection-start-line="54" selection-start-column="69" selection-end-line="54" selection-end-column="69" />
+            </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/spqr/algorithms/dual_averaging.py">
+        <entry file="file://$PROJECT_DIR$/spqr/oracle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="54" column="69" lean-forward="true" selection-start-line="54" selection-start-column="69" selection-end-line="54" selection-end-column="69" />
+            <state relative-caret-position="540">
+              <caret line="221" selection-start-line="221" selection-end-line="221" />
+              <folding>
+                <marker date="1586176802758" expanded="true" signature="6480:6490" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -211,14 +206,14 @@
         <option value="$PROJECT_DIR$/docs/api_detailed/oracles.rst" />
         <option value="$PROJECT_DIR$/docs/api_detailed/risk_optimization.rst" />
         <option value="$PROJECT_DIR$/spqr/risk_optimization.py" />
+        <option value="$PROJECT_DIR$/spqr/oracle.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1920" />
-    <option name="y" value="-450" />
-    <option name="width" value="1920" />
-    <option name="height" value="1057" />
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="1440" />
+    <option name="height" value="801" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -237,12 +232,6 @@
               <item name="toolbox" type="b2602c69:ProjectViewProjectNode" />
               <item name="toolbox" type="462c0819:PsiDirectoryNode" />
               <item name="spqr" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="toolbox" type="b2602c69:ProjectViewProjectNode" />
-              <item name="toolbox" type="462c0819:PsiDirectoryNode" />
-              <item name="spqr" type="462c0819:PsiDirectoryNode" />
-              <item name="algorithms" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -281,10 +270,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="-450" width="1920" height="1057" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="801" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12087327" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.115879826" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -347,28 +336,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/api_detailed/algorithms.rst">
-      <provider selected="true" editor-type-id="restructured-text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/api_detailed/risk_optimization.rst">
-      <provider selected="true" editor-type-id="restructured-text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/api_detailed/oracles.rst">
-      <provider selected="true" editor-type-id="restructured-text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/api_detailed/algorithms.rst" />
+    <entry file="file://$PROJECT_DIR$/docs/api_detailed/risk_optimization.rst" />
+    <entry file="file://$PROJECT_DIR$/docs/api_detailed/oracles.rst" />
     <entry file="file://$PROJECT_DIR$/docs/api.rst">
       <provider selected="true" editor-type-id="restructured-text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/docs/index.rst">
       <provider selected="true" editor-type-id="restructured-text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/supyquantile_env.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="6" selection-start-column="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/supyquantile_env.yml" />
     <entry file="file://$PROJECT_DIR$/docs/conf.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1813">
@@ -376,19 +353,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spqr/oracle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
-          <folding>
-            <marker date="1554400263979" expanded="true" signature="6480:6490" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/spqr/risk_optimization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
+        <state relative-caret-position="170">
           <caret line="20" column="46" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
           <folding>
             <element signature="e#124#178#0" expanded="true" />
@@ -397,14 +364,22 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spqr/algorithms/catalyst.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7" />
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/spqr/algorithms/dual_averaging.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="54" column="69" lean-forward="true" selection-start-line="54" selection-start-column="69" selection-end-line="54" selection-end-column="69" />
+        <state relative-caret-position="387">
+          <caret line="54" column="69" selection-start-line="54" selection-start-column="69" selection-end-line="54" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spqr/oracle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="221" selection-start-line="221" selection-end-line="221" />
+          <folding>
+            <marker date="1586176802758" expanded="true" signature="6480:6490" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
