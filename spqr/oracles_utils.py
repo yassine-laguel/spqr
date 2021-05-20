@@ -98,7 +98,6 @@ def fast_find_lmbda(v, sorted_index, p, rho):
 def fast_theta_prime(lmbda, v, sorted_index, p, rho):
     n = len(v)
     c = 1.0 / (n * (1.0 - p))
-
     res = 1.0
     counter = n - 1
     while counter >= 0:
