@@ -2,9 +2,10 @@
     # License: BSD
 
 import numpy as np
+from numba import njit
 
 
-def quantile(p, u):
+def old_quantile(p, u):
     """ Computes the p-quantile of u
 
         :param ``float`` p: probability associated to the quantile
@@ -23,6 +24,16 @@ def quantile(p, u):
         return v[index]
 
 
+@njit
+def quantile(p, u):
+    if p == 0:
+        k = 1
+    else:
+        k = np.ceil(p * len(u))
+    return _quickselect(k, u)
+
+
+@njit
 def superquantile(p, u):
     """ Computes the p-superquantile of u
 
@@ -40,59 +51,45 @@ def superquantile(p, u):
     else:
         n = len(u)
         q_p = quantile(p, u)
-        condition = u > q_p
-        higher_data = np.extract(condition, u)
-        cvar_plus = np.mean(higher_data)
-        lmbda = (np.ceil(n * p)/n - p) / (1.0 - p)
-        return lmbda * q_p + (1.0 - lmbda) * cvar_plus
+        higher_data = np.extract(u > q_p, u)
+        if len(higher_data) == 0:
+            return q_p
+        else:
+            next_jump = (u <= q_p).sum() / n
+            cvar_plus = np.mean(higher_data)
+            lmbda = (next_jump - p) / (1.0 - p)
+            return lmbda * q_p + (1.0 - lmbda) * cvar_plus
 
 
-def hyperquantile(p, u):
-    """ Computes the p-hyperquantile of u
+@njit
+def _quickselect(k, list_of_numbers):
+    return _kthSmallest(list_of_numbers, k, 0, len(list_of_numbers) - 1)
 
-                :param ``float`` p: probability associated to the hyperquantile
-                :param ``numpy.array`` u: vector of realizations of the random variable
-                whose superquantile is to be computed
 
-                :return p-hyperquantile of u
-    """
-    v = np.sort(u)
-    n = len(v)
+@njit
+def _kthSmallest(arr, k, start, end):
 
-    if p == 1:
-        return v[n - 1]
+    pivot_index = _partition(arr, start, end)
 
-    def _integrate_superquantile(p1):
+    if pivot_index - start == k - 1:
+        return arr[pivot_index]
 
-        index = int(np.ceil(n * p1)) - 1
+    if pivot_index - start > k - 1:
+        return _kthSmallest(arr, k, start, pivot_index - 1)
 
-        if p1 == 0.0:
-            index = 0
-        if p1 == 1.0:
-            return 0.0
+    return _kthSmallest(arr, k - pivot_index + start - 1, pivot_index + 1, end)
 
-        if index == n - 1:
-            return ((np.log((1 - p) / (1 - p1)) + 1) * (1 - p1)) * v[n - 1]
 
-        p2 = float(index + 1) / n
+@njit
+def _partition(arr, l, r):
 
-        if p2 == p1:
-            p2 += 1.0 / n
-            index += 1
-            if p2 == 1.0:
-                return ((np.log((1 - p) / (1 - p1)) + 1) * (1 - p1)) * v[n - 1]
+    pivot = arr[r]
+    i = l
+    for j in range(l, r):
 
-        s = 0
+        if arr[j] <= pivot:
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
 
-        while p2 < 1.0:
-            q = v[index]
-            s += q * (np.log(1.0 - p) * (p2 - p1) + (1 - p2) * np.log(1 - p2) - (1 - p1) * np.log(1 - p1) + p2 - p1)
-            p1 = p2
-            p2 += 1.0 / n
-            index += 1
-
-        s += ((np.log((1 - p) / (1 - p1)) + 1) * (1 - p1)) * v[n - 1]
-
-        return s
-
-    return _integrate_superquantile(p) / (1.0 - p)
+    arr[i], arr[r] = arr[r], arr[i]
+    return i

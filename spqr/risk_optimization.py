@@ -5,21 +5,19 @@
 """
 
 from sklearn.base import BaseEstimator, RegressorMixin
-from .oracle import OracleDualAveraging, OracleSubgradient, OracleSmoothGradient, IntergratedOracleSubgradient
-from .oracle import IntegratedOracleSmoothGradient
+from .oracle import OracleSubgradient, OracleSmoothGradient, OracleStochasticGradient
 from .algorithms.subgradient_method import SubgradientMethod
 from .algorithms.gradient_method import GradientMethod
-from .algorithms.catalyst import Catalyst
 from .algorithms.dual_averaging_advanced import DualAveragingAdvanced
 from .algorithms.quasi_newton import BFGS
-from .algorithms.dual_averaging import DualAveraging
 from .algorithms.nesterov import NesterovMethod
+from .algorithms.sgd import SGD
+from .algorithms.svrg import SVRG
 import numpy as np
 
 
 class RiskOptimizer(BaseEstimator, RegressorMixin):
     """ Base class for optimization of superquantile-based losses.
-
             For an input oracle :math:`L` given through two functions ``function_l`` and ``gradient_l``,
             this class is an interface to run optimization procedures aimed at minimizing
             :math:`w \\mapsto Cvar \\circ L(w)`. Given the regularity of the loss, the algorithm chosen for
@@ -36,80 +34,59 @@ class RiskOptimizer(BaseEstimator, RegressorMixin):
             :param beta_smoothness: estimation of the smoothness of :math:`L` (used for accelerated gradient method).
     """
 
-    def __init__(self, loss, loss_grad, algorithm='subgradient', mode='superquantile', w_start=None, p=None,
+    def __init__(self, loss, loss_grad, algorithm=None, w_start=None, p=None,
                  alpha=None, mu=None, max_iter=None, dual_averaging_lmbda=None, beta_smoothness=None, params=None):
 
         self._treat_parameters(algorithm, w_start, p, alpha, mu, max_iter,
                                dual_averaging_lmbda, beta_smoothness, params)
 
-        if mode == 'superquantile':
+        if self.params['algorithm'] == 'subgradient':
+            self.oracle = OracleSubgradient(loss, loss_grad, self.params['p'])
+            self.algorithm = SubgradientMethod(self.oracle, self.params)
 
-            if self.params['algorithm'] == 'dual_averaging_basic':
-                self.oracle = OracleDualAveraging(loss, loss_grad, self.params['p'])
-                self.algorithm = DualAveraging(self.oracle, self.params)
+        elif self.params['algorithm'] == 'dual_averaging':
+            self.oracle = OracleSubgradient(loss, loss_grad, self.params['p'])
+            self.algorithm = DualAveragingAdvanced(self.oracle, self.params)
 
-            elif self.params['algorithm'] == 'subgradient':
-                self.oracle = OracleSubgradient(loss, loss_grad, self.params['p'])
-                self.algorithm = SubgradientMethod(self.oracle, self.params)
+        elif self.params['algorithm'] == 'gradient':
+            self.oracle = OracleSmoothGradient(loss, loss_grad, self.params['p'],
+                                               smoothing_parameter=self.params['mu'])
+            self.algorithm = GradientMethod(self.oracle, self.params)
 
-            elif self.params['algorithm'] == 'dual_averaging':
-                self.oracle = OracleSubgradient(loss, loss_grad, self.params['p'])
-                self.algorithm = DualAveragingAdvanced(self.oracle, self.params)
+        elif self.params['algorithm'] == 'nesterov':
+            self.oracle = OracleSmoothGradient(loss, loss_grad, self.params['p'],
+                                               smoothing_parameter=self.params['mu'])
+            self.algorithm = NesterovMethod(self.oracle, self.params)
 
-            elif self.params['algorithm'] == 'gradient':
-                self.oracle = OracleSmoothGradient(loss, loss_grad, self.params['p'],
-                                                   smoothing_parameter=self.params['mu'])
-                self.algorithm = GradientMethod(self.oracle, self.params)
+        elif self.params['algorithm'] == 'bfgs':
+            self.oracle = OracleSmoothGradient(loss, loss_grad, self.params['p'],
+                                               smoothing_parameter=self.params['mu'])
+            self.algorithm = BFGS(self.oracle, self.params)
 
-            elif self.params['algorithm'] == 'catalyst':
-                self.oracle = OracleSmoothGradient(loss, loss_grad, self.params['p'],
-                                                   smoothing_parameter=self.params['mu'])
-                self.algorithm = Catalyst(self.oracle, self.params)
+        elif self.params['algorithm'] == 'sgd':
+            self.oracle = OracleStochasticGradient(loss, loss_grad, self.params['p'],
+                                                         smoothing_parameter=self.params['mu'],
+                                                         mini_batch_size=self.params['sgd_mini_batch_size'])
+            self.algorithm = SGD(self.oracle, self.params)
 
-            elif self.params['algorithm'] == 'nesterov':
-                self.oracle = OracleSmoothGradient(loss, loss_grad, self.params['p'],
-                                                   smoothing_parameter=self.params['mu'])
-                self.algorithm = NesterovMethod(self.oracle, self.params)
+        elif self.params['algorithm'] == 'svrg':
 
-            elif self.params['algorithm'] == 'bfgs':
-                self.oracle = OracleSmoothGradient(loss, loss_grad, self.params['p'],
-                                                   smoothing_parameter=self.params['mu'])
-                self.algorithm = BFGS(self.oracle, self.params)
+            whole_oracle = OracleSmoothGradient(loss, loss_grad, self.params['p'], smoothing_parameter=self.params['mu'])
 
-        elif mode == 'hyperquantile':
+            self.oracle = OracleStochasticGradient(loss, loss_grad, self.params['p'],
+                                                         smoothing_parameter=self.params['mu'],
+                                                         mini_batch_size=self.params['svrg_mini_batch_size'])
+            self.algorithm = SVRG(self.oracle, whole_oracle, self.params)
 
-            if self.params['algorithm'] == 'subgradient':
-                self.oracle = IntergratedOracleSubgradient(loss, loss_grad, self.params['p'])
-                self.algorithm = SubgradientMethod(self.oracle, self.params)
-
-            elif self.params['algorithm'] == 'dual_averaging':
-                self.oracle = IntergratedOracleSubgradient(loss, loss_grad, self.params['p'])
-                self.algorithm = DualAveragingAdvanced(self.oracle, self.params)
-
-            elif self.params['algorithm'] == 'gradient':
-                self.oracle = IntegratedOracleSmoothGradient(loss, loss_grad, self.params['p'],
-                                                             smoothing_parameter=self.params['mu'])
-                self.algorithm = GradientMethod(self.oracle, self.params)
-
-            elif self.params['algorithm'] == 'catalyst':
-                self.oracle = IntegratedOracleSmoothGradient(loss, loss_grad, self.params['p'],
-                                                             smoothing_parameter=self.params['mu'])
-                self.algorithm = Catalyst(self.oracle, self.params)
-
-            elif self.params['algorithm'] == 'nesterov':
-                self.oracle = IntegratedOracleSmoothGradient(loss, loss_grad, self.params['p'],
-                                                             smoothing_parameter=self.params['mu'])
-                self.algorithm = NesterovMethod(self.oracle, self.params)
-
-            elif self.params['algorithm'] == 'bfgs':
-                self.oracle = IntegratedOracleSmoothGradient(loss, loss_grad, self.params['p'],
-                                                             smoothing_parameter=self.params['mu'])
-                self.algorithm = BFGS(self.oracle, self.params)
+        # Only for testing TODO: Remove this condition block after testing
+        elif self.params['algorithm'] == 'bfgs_test':
+            self.oracle = OracleSubgradient(loss, loss_grad, self.params['p'])
+            self.algorithm = BFGS(self.oracle, self.params)
 
         self.solution = 0.
         self.list_iterates = []
 
-    def fit(self, x, y, verbose_mode=False):
+    def fit(self, x, y, logs=False, verbose_mode=False, logs_freq=1):
         """ Runs the optimization of the model
 
                 :param ``numpy.ndarray`` x: matrix whose lines are realizations of random variable :math:`X`
@@ -118,7 +95,7 @@ class RiskOptimizer(BaseEstimator, RegressorMixin):
         """
 
         self._complete_params_and_scale_X(x, y)
-        self.algorithm.run(x, y, verbose_mode=verbose_mode)
+        self.algorithm.run(x, y, logs=logs, verbose_mode=verbose_mode, logs_freq=logs_freq)
         self.solution = self.algorithm.w
         self.list_iterates = self.algorithm.list_iterates
 
@@ -193,16 +170,24 @@ class RiskOptimizer(BaseEstimator, RegressorMixin):
             'gradient_stepsize_decrease': lambda k: 1.0,
             'gradient_nb_iterations': 100,
 
-            # Catalyst Parameters
-            'catalyst_nb_iterations': 100,
-            'catalyst_kappa': 100,
-
             # Nesterov Parameters
             'nesterov_nb_iterations': 100,
             'beta_smoothness': 1000.0,
 
             # BFGS Parameters
-            'bfgs_nb_iterations': 1000
+            'bfgs_nb_iterations': 1000,
+
+            # SGD Parameters
+            'sgd_nb_iterations': 10000,
+            'sgd_stepsize': lambda k: 0.1 / (1.0 + (k-1.0/10) ** 0.5),
+            'sgd_mass': 0.9,
+            'sgd_mini_batch_size': 50,
+
+            # SVRG Parameters
+            'svrg_nb_iterations': 100,
+            'svrg_nb_sub_iterations': 100,
+            'svrg_initial_stepsize': 0.1,
+            'svrg_mini_batch_size': 50,
         }
 
         return params
@@ -214,10 +199,8 @@ class RiskOptimizer(BaseEstimator, RegressorMixin):
             self.algorithm.w = self.params['w_start']
             self._update_algoritm_params()
 
-        if not (self.params['algorithm'] == 'catalyst' or self.params['algorithm'] == 'dual_averaging_basic'):
+        if not self.params['algorithm'] in ['bfgs', 'sgd']:
             self._find_alpha(x, y)
-        elif self.params['algorithm'] == 'dual_averaging_basic':
-            self._find_alpha_da(x, y)
 
     def _find_alpha(self, x, y):
 
@@ -239,41 +222,6 @@ class RiskOptimizer(BaseEstimator, RegressorMixin):
         while condition:
             alpha *= a
             condition = self.oracle.f(w - alpha * gradient, x, y) > function_value - alpha * c1 * gradient_norm_square
-
-        self.params['alpha'] = alpha
-        self._update_algoritm_params()
-
-    def _find_alpha_da(self, x, y):
-
-        if self.params['alpha'] is not None:
-            return
-
-        alpha = self.params['alpha_start']
-        w = self.params['w_start']
-
-        a = 0.99
-        c1 = 0.0001
-
-        d = len(w)
-        n = len(y)
-        q = np.ones(n)/n
-
-        gradient = self.oracle.g(w, q, x, y)
-        gradient_w = gradient[:d]
-        gradient_q = gradient[d:]
-
-        lmbda = self.params['dual_averaging_basic_lmbda']
-        gradient_norm_square = (1.0/lmbda) * np.linalg.norm(gradient_w)**2 + \
-                             (1.0 / (1.0 - lmbda)) * np.linalg.norm(gradient_q)**2
-        function_value = self.oracle.f(w, q, x, y)
-
-        condition = (self.oracle.f(w - alpha * gradient_w, q - alpha * gradient_q, x, y) >
-                     function_value - alpha * c1 * gradient_norm_square)
-
-        while condition:
-            alpha *= a
-            condition = (self.oracle.f(w - alpha * gradient_w, q - alpha * gradient_q, x, y) >
-                         function_value - alpha * c1 * gradient_norm_square)
 
         self.params['alpha'] = alpha
         self._update_algoritm_params()

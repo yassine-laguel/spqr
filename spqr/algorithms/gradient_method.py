@@ -23,13 +23,15 @@ class GradientMethod():
         self.list_times = []
         self.alpha = self.params['alpha']
 
-    def run(self, x, y, verbose_mode=False):
+    def run(self, x, y, logs=True, verbose_mode=False, logs_freq=1):
         """ Runs Gradient Method
 
             :param ``numpy.ndarray`` x: matrix whose lines are realizations of random variable X
             :param ``numpy.array`` y: vector whose coefficients are realizations of random variable y
-            :param ``bool`` verbose_mode: If ``True``, saves function values during iterations of selected
-                                algorithm as well as time since start.
+            :param ``bool`` logs: If ``True``, saves function values during iterations of selected
+                        algorithm as well as time since start.
+            :param ``bool`` verbose_mode: If ``True``, prints out, while running the algorithm the number of
+                iterations being completed.
         """
 
         self.alpha = self.params['alpha']
@@ -38,9 +40,10 @@ class GradientMethod():
         counter = 0
         while counter < self.params['gradient_nb_iterations']:
 
-            if verbose_mode:
+            if logs and counter % logs_freq == 0:
                 self.list_times.append(time() - start_time)
                 self.list_values.append(self.oracle.cost_function(self.w, x, y))
+            if verbose_mode:
                 sys.stdout.write('%d / %d  iterations completed \r' % (counter, self.params['gradient_nb_iterations']))
                 sys.stdout.flush()
 
@@ -53,7 +56,7 @@ class GradientMethod():
 
         return self._find_stepsize(w, x, y)
 
-    def _find_stepsize(self, w, x, y, mode_debug=False):
+    def _find_stepsize(self, w, x, y):
 
         alpha = self.params['alpha']
 
@@ -78,9 +81,6 @@ class GradientMethod():
                 condition = (self.oracle.f(w - alpha * gradient, x,
                                            y) > function_value - alpha * c2 * gradient_norm_square)
             alpha *= a
-
-        if mode_debug:
-            print('alpha_value ' + str(alpha))
 
         self.params['alpha'] = alpha
         return alpha

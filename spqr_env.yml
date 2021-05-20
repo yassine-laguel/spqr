@@ -1,17 +1,16 @@
-name: spqr_env
+name: spqr_environment
 dependencies:
 - python=3.6
-- numpy
 - pip
 - pip:
         - cvxopt
         - numpy
         - scipy
-        - matplotlib
-        - ipython
-        - jupyter
-        - pandas
         - scikit-learn
-        - pytest
-        - seaborn
-        - Sphinx
+        - numba
+        - torch # Only for EXPS
+        - torchvision # Only for EXPS
+        - torchaudio # Only for EXPS
+        - scikit-image # Only for EXPS
+        - imageio  # Only for EXPS
+        - pandas # Only for EXPS

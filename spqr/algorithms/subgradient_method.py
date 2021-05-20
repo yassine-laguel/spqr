@@ -23,13 +23,15 @@ class SubgradientMethod:
         self.list_values = []
         self.list_times = []
 
-    def run(self, x, y, verbose_mode=False):
+    def run(self, x, y, logs=False, verbose_mode=False, logs_freq=1):
         """ Runs the subgradient method
 
                 :param ``numpy.ndarray`` x: matrix whose lines are realizations of random variable X
                 :param ``numpy.array`` y: vector whose coefficients are realizations of random variable y
-                :param ``bool`` verbose_mode: If ``True``, saves function values during iterations of selected
-                        algorithm as well as time since start.
+                :param ``bool`` logs: If ``True``, saves function values during iterations of selected
+                        algorithm as well as times since start.
+                :param ``bool`` verbose_mode: If ``True``, prints out while running the algorithm the number of
+                iterations being completed.
         """
 
         counter = 0
@@ -37,9 +39,10 @@ class SubgradientMethod:
 
         while counter < self.params['subgradient_nb_iterations']:
 
-            if verbose_mode:
+            if logs:
                 self.list_times.append(time() - start_time)
                 self.list_values.append(self.oracle.cost_function(self.w, x, y))
+            if verbose_mode:
                 sys.stdout.write('%d / %d  iterations completed \r'
                                  % (counter, self.params['subgradient_nb_iterations']))
                 sys.stdout.flush()
