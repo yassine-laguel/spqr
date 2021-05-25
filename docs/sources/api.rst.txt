@@ -37,7 +37,7 @@ Algorithms for a smooth loss function:
 
     spqr.algorithms.GradientMethod
     spqr.algorithms.NesterovMethod
-    spqr.algorithms.BFGS
+    spqr.algorithms.LBFGS
 
 Risk Optimization Framework
 ---------------------------

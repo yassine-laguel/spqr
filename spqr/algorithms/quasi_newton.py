@@ -8,7 +8,7 @@ import numpy as np
 import sys
 
 
-class BFGS:
+class LBFGS:
     """ Class aimed at running Low memory bfgs method.
 
             :param oracle: An oracle object among ``OracleSubgradient``, ``OracleSmoothGradient``,

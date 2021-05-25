@@ -14,5 +14,5 @@ Algorithms for differentiable losses
     :members:
 .. autoclass:: spqr.algorithms.NesterovMethod
     :members:
-.. autoclass:: spqr.algorithms.BFGS
+.. autoclass:: spqr.algorithms.LBFGS
     :members:

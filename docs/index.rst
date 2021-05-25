@@ -19,7 +19,7 @@ For a couple of features and labels :math:`(X,y)`,this toolbox is aimed at minim
 
 where :math:`\text{CVAR}` denotes the superquantile, also called "conditional value at risk", "average value at risk" or "expected shortfall" and loss function :math:`L` is assumed to be provided by the user together with the dataset :math:`(X,y)`.
 
-We build oracles for the nonsmooth function phi and for a smoothed counterpart :math:`phi_mu`. Various first-order algorithms are proposed to minimise these 2 functions. Among these first order algorithms, one can find the Dual Averaging Method, Nesterov Accelerated Method or BFGS. For instance, quantile regression and superquantile regression can be performed with this toolbox :
+We build oracles for the nonsmooth function phi and for a smoothed counterpart :math:`phi_mu`. Various first-order algorithms are proposed to minimise these 2 functions. Among these first order algorithms, one can find the Dual Averaging Method, Nesterov Accelerated Method or LBFGS. For instance, quantile regression and superquantile regression can be performed with this toolbox :
 
 .. image:: img/quantile_superquantile_reg-1.png
    :scale: 50 %

@@ -1,22 +1,22 @@
-"""Module with definitions of first order oracles class and their smoothed version.
+"""Module containing the main object to run superquantile-based learning methods.
 
 
 .. moduleauthor:: Yassine LAGUEL
 """
 
-from sklearn.base import BaseEstimator, RegressorMixin
+from sklearn.base import BaseEstimator
 from .oracle import OracleSubgradient, OracleSmoothGradient, OracleStochasticGradient
 from .algorithms.subgradient_method import SubgradientMethod
 from .algorithms.gradient_method import GradientMethod
 from .algorithms.dual_averaging_advanced import DualAveragingAdvanced
-from .algorithms.quasi_newton import BFGS
+from .algorithms.quasi_newton import LBFGS
 from .algorithms.nesterov import NesterovMethod
 from .algorithms.sgd import SGD
 from .algorithms.svrg import SVRG
 import numpy as np
 
 
-class RiskOptimizer(BaseEstimator, RegressorMixin):
+class RiskOptimizer(BaseEstimator):
     """ Base class for optimization of superquantile-based losses.
             For an input oracle :math:`L` given through two functions ``function_l`` and ``gradient_l``,
             this class is an interface to run optimization procedures aimed at minimizing
@@ -27,7 +27,7 @@ class RiskOptimizer(BaseEstimator, RegressorMixin):
             :param loss_grad: gradient associated to the oracle
             :param p: probability level (by default 0.8)
             :param algorithm: chosen algorithm for optimization. Allowed inputs are ``'subgradient'``,
-                ``'dual_averaging'``, ``'gradient'``, ``'nesterov'`` and ``'bfgs'``. Default is ``'subgradient'``
+                ``'dual_averaging'``, ``'gradient'``, ``'nesterov'`` and ``'l-bfgs'``. Default is ``'subgradient'``
             :param w_start: starting point of the algorithm
             :param alpha: scale parameter for the direction descent (by default computed through a line search)
             :param mu: smoothing parameter associated to the CVar
@@ -58,10 +58,10 @@ class RiskOptimizer(BaseEstimator, RegressorMixin):
                                                smoothing_parameter=self.params['mu'])
             self.algorithm = NesterovMethod(self.oracle, self.params)
 
-        elif self.params['algorithm'] == 'bfgs':
+        elif self.params['algorithm'] == 'l-bfgs':
             self.oracle = OracleSmoothGradient(loss, loss_grad, self.params['p'],
                                                smoothing_parameter=self.params['mu'])
-            self.algorithm = BFGS(self.oracle, self.params)
+            self.algorithm = LBFGS(self.oracle, self.params)
 
         elif self.params['algorithm'] == 'sgd':
             self.oracle = OracleStochasticGradient(loss, loss_grad, self.params['p'],
@@ -78,10 +78,10 @@ class RiskOptimizer(BaseEstimator, RegressorMixin):
                                                          mini_batch_size=self.params['svrg_mini_batch_size'])
             self.algorithm = SVRG(self.oracle, whole_oracle, self.params)
 
-        # Only for testing TODO: Remove this condition block after testing
-        elif self.params['algorithm'] == 'bfgs_test':
-            self.oracle = OracleSubgradient(loss, loss_grad, self.params['p'])
-            self.algorithm = BFGS(self.oracle, self.params)
+        # # Only for testing TODO: Remove this condition block after testing
+        # elif self.params['algorithm'] == 'bfgs_test':
+        #     self.oracle = OracleSubgradient(loss, loss_grad, self.params['p'])
+        #     self.algorithm = LBFGS(self.oracle, self.params)
 
         self.solution = 0.
         self.list_iterates = []
@@ -98,23 +98,6 @@ class RiskOptimizer(BaseEstimator, RegressorMixin):
         self.algorithm.run(x, y, logs=logs, verbose_mode=verbose_mode, logs_freq=logs_freq)
         self.solution = self.algorithm.w
         self.list_iterates = self.algorithm.list_iterates
-
-    def predict(self, x):
-        """ Gives a prediction of x
-
-                :param ``numpy.array`` x: input whose label is to predict
-                :return:  value of the prediction
-        """
-
-        return np.dot(x, self.algorithm.w)
-
-    def score(self, x, y):
-        """ To be implemented in next release
-
-        """
-        # n = len(y_true)
-        # a = np.sum([(y_true[i] - y_pred[i])**2 for i in range(n)])/n
-        return 0
 
     def _treat_parameters(self, algorithm, w_start, p, alpha, mu, max_iter,
                           dual_averaging_lmbda, beta_smoothness, params):
@@ -174,8 +157,8 @@ class RiskOptimizer(BaseEstimator, RegressorMixin):
             'nesterov_nb_iterations': 100,
             'beta_smoothness': 1000.0,
 
-            # BFGS Parameters
-            'bfgs_nb_iterations': 1000,
+            # LBFGS Parameters
+            'l-bfgs_nb_iterations': 1000,
 
             # SGD Parameters
             'sgd_nb_iterations': 10000,
@@ -199,7 +182,7 @@ class RiskOptimizer(BaseEstimator, RegressorMixin):
             self.algorithm.w = self.params['w_start']
             self._update_algoritm_params()
 
-        if not self.params['algorithm'] in ['bfgs', 'sgd']:
+        if not self.params['algorithm'] in ['l-bfgs', 'sgd']:
             self._find_alpha(x, y)
 
     def _find_alpha(self, x, y):
