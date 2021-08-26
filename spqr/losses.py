@@ -20,10 +20,10 @@ def l2_prime(w, batched_x, batched_y, lmbda=0.0):
 @njit
 def logistic_loss(w, batched_x, batched_y, lmbda=0.0, n_features=10, n_classes=10):
 
-    def single_loss(w, x_i, y_i, l2_penalty=lmbda, eps=1e-15):
-        y_hat = softmax(np.dot(x_i, w))
-        y_hat = clip(y_hat, eps, 1.0 - eps)
-        return - np.sum(y_i * np.log(y_hat)) + l2_penalty / 2 * np.linalg.norm(w) ** 2
+    def single_loss(w, x_i, y_i, l2_penalty=lmbda, eps=0):
+        score = np.dot(x_i, w)
+        log_y_hat = score - logsumexp(score)
+        return - np.sum(y_i * log_y_hat) + l2_penalty / 2 * np.linalg.norm(w) ** 2
 
     w_mat = np.reshape(w, (n_features, n_classes))
     n = len(batched_y)
@@ -70,6 +70,12 @@ def clip(a, a_min, a_max):
         else:
             out[ii] = a[ii]
     return out
+
+@njit
+def logsumexp(a):
+    i_max = np.argmax(a)
+    return np.log1p(np.sum(np.delete(np.exp(a - a[i_max]), i_max))) + a[i_max] 
+
 
 
 
