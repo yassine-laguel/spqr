@@ -64,8 +64,9 @@ class DRLinearRegression(RiskOptimizer, RegressorMixin):
                 :param ``numpy.array`` x: input whose label is to predict
                 :return:  value of the prediction
         """
-
-        return np.dot(x, self.algorithm.w)
+        formatted_x = np.ones((x.shape[0], x.shape[1] + self.fit_intercept))
+        formatted_x[:, self.fit_intercept:] = x
+        return np.dot(formatted_x, np.reshape(self.algorithm.w, (-1, 1))).ravel()
 
     def score(self, X, y, sample_weights=None):
         return 0
@@ -152,6 +153,26 @@ class DRLogisticRegression(RiskOptimizer, ClassifierMixin):
 
     def score(self, X, y, sample_weights=None):
         return 0
+
+    def losses(self, w, x, y):
+        # TODO Factor code used to format dataset into an auxialiary method.
+        self.n_features = x.shape[1]
+        le = LabelEncoder()
+        le.fit(y)
+        self.n_classes = len(le.classes_)
+        formatted_y = le.transform(y)
+        formatted_y = _recast_y(formatted_y, n_classes=self.n_classes)
+
+        if self.lmbda is None:
+            self.lmbda = 1.0 / y.shape[0]
+
+        if self.fit_intercept:
+            formatted_x = np.ones((x.shape[0], self.n_features + 1))
+            formatted_x[:, 1:] = x
+        else:
+            formatted_x = x
+
+        return self.logistic_loss(w, formatted_x, formatted_y)
 
 
 @njit

@@ -25,7 +25,7 @@ def compute_subgradient(sequence_losses, sequence_gradients, p):
     alpha = (np.ceil(p*n)/n - p)/len(i_p)
 
     res = 1.0/(1.0 - p) * ((1.0/n) * np.sum(sequence_gradients[j_p], axis=0)
-                           + alpha * np.sum(sequence_gradients[i_p] , axis=0))
+                           + alpha * np.sum(sequence_gradients[i_p], axis=0))
 
     return res
 

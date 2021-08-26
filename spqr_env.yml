@@ -14,3 +14,5 @@ dependencies:
         - scikit-image # Only for EXPS
         - imageio  # Only for EXPS
         - pandas # Only for EXPS
+        - pandas # Only for EXPS
+        - openml # Only for EXPS

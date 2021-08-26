@@ -78,10 +78,10 @@ class RiskOptimizer(BaseEstimator):
                                                          mini_batch_size=self.params['svrg_mini_batch_size'])
             self.algorithm = SVRG(self.oracle, whole_oracle, self.params)
 
-        # # Only for testing TODO: Remove this condition block after testing
-        # elif self.params['algorithm'] == 'bfgs_test':
-        #     self.oracle = OracleSubgradient(loss, loss_grad, self.params['p'])
-        #     self.algorithm = LBFGS(self.oracle, self.params)
+        # Only for testing TODO: Remove this condition block after testing
+        elif self.params['algorithm'] == 'bfgs_test':
+            self.oracle = OracleSubgradient(loss, loss_grad, self.params['p'])
+            self.algorithm = LBFGS(self.oracle, self.params)
 
         self.solution = 0.
         self.list_iterates = []
